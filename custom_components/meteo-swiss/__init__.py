@@ -5,7 +5,7 @@ import datetime
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
 from homeassistant.helpers.typing import ConfigType, HomeAssistantType
-from hamsclient import meteoSwissClient
+from hamsclientfork import meteoSwissClient
 from .const import CONF_DISPLAYNAME,CONF_POSTCODE,CONF_STATION,CONF_ENABLESENSORS
 from homeassistant.util import Throttle
 

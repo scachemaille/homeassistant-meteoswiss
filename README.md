@@ -1,12 +1,11 @@
-[![](https://img.shields.io/github/release/websylv/homeassistant-meteoswiss/all.svg)](https://github.com/websylv/homeassistant-meteoswiss/releases)
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+# homeassistant-meteoswiss (forked)
 
-  
-  
+Home Assistant meteo swiss integration.
 
-# homeassistant-meteoswiss  
-
-Home Assistant meteo swiss integration
+This was forked from https://github.com/websylv/homeassistant-meteoswiss because
+the original author is unresponsive.  Use this in your Home Assistant by deleting
+the original integration, then adding this as a custom HACS repo, and then
+reinstalling the integration through this repository.
 
 ## :warning: :warning: :warning: Upgrade form 0.6 or earlier :warning: :warning: :warning:
   

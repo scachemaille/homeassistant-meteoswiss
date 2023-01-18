@@ -1,4 +1,4 @@
-from hamsclient import meteoSwissClient
+from hamsclientfork import meteoSwissClient
 
 import logging
 

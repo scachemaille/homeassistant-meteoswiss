@@ -7,7 +7,7 @@ from homeassistant.const import CONF_NAME
 from homeassistant import config_entries
 from homeassistant.core import callback
 from .const import DOMAIN,CONF_POSTCODE,CONF_STATION,CONF_ENABLESENSORS
-from hamsclient import meteoSwissClient
+from hamsclientfork import meteoSwissClient
 
 
 
