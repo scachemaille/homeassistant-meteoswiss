@@ -57,12 +57,20 @@ class MeteoSwissFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         lat = self.hass.config.latitude
         lon = self.hass.config.longitude
         self._client = await self.hass.async_add_executor_job(meteoSwissClient)
-        self._postCode = await self.hass.async_add_executor_job(self._client.getPostCode,lat,lon)
-        _LOGGER.debug("Get closest station for Lon : %s - Lat : %s",lon,lat)
-        self._station =await self.hass.async_add_executor_job(self._client.get_closest_station,lat,lon) 
-        
-        if(self._station is not None):
-            self._stationName = await self.hass.async_add_executor_job(self._client.get_station_name,self._station)
+        self._postCode = await self.hass.async_add_executor_job(
+            self._client.getPostCode, lat, lon
+        )
+        if self._postCode:
+            self._postCode = int(self._postCode)
+        _LOGGER.debug("Get closest station for Lon : %s - Lat : %s", lon, lat)
+        self._station = await self.hass.async_add_executor_job(
+            self._client.get_closest_station, lat, lon
+        )
+
+        if self._station is not None:
+            self._stationName = await self.hass.async_add_executor_job(
+                self._client.get_station_name, self._station
+            )
         else:
             self._stationName = None
 

@@ -9,9 +9,7 @@ reinstalling the integration through this repository.
 
 ## Known issues
 
-When you add the integration, it will ask you for a postcode, probably prefilling
-it.  You have to retype the number, otherwise it will insist that the number is
-not a number.  The issue is still being tracked.
+None at this time.
 
 ## Information
 
