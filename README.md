@@ -7,25 +7,11 @@ the original author is unresponsive.  Use this in your Home Assistant by deletin
 the original integration, then adding this as a custom HACS repo, and then
 reinstalling the integration through this repository.
 
-## :warning: :warning: :warning: Upgrade form 0.6 or earlier :warning: :warning: :warning:
-  
+## Known issues
 
-This intergration have been fully rewrited !
-
-Is no longer compatible with the old configuration.
-
-**Please remove old configuration before upgrade !**
-
-In home configuration go to weather section and remove all the configuration related to platform meteo-swiss 
-
-```YAML
-weather:
-  [...]
-  - platform: meteo-swiss
-    postcode: 1233
-    [...]
-```
-restart you home assistant and then upgrade to the new version and proccced with the configuration part
+When you add the integration, it will ask you for a postcode, probably prefilling
+it.  You have to retype the number, otherwise it will insist that the number is
+not a number.  The issue is still being tracked.
 
 ## Information
 
