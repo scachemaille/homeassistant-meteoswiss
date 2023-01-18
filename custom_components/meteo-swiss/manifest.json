@@ -2,9 +2,9 @@
     "domain": "meteo-swiss",
     "name": "Meteo Swiss",
     "version": "1.3.1",
-    "documentation": "https://github.com/websylv/homeassistant-meteoswiss",
+    "documentation": "https://github.com/Rudd-O/homeassistant-meteoswiss",
     "dependencies": [],
-    "codeowners": ["websylv"],
+    "codeowners": ["Rudd-O"],
     "config_flow": true,
     "requirements": [
         "hamsclientfork==0.2.3",
