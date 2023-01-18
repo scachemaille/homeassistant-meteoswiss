@@ -1,8 +1,7 @@
 {
-    "name": "Meteo Swiss",
-    "render_readme" : true,
-    "domains": "weather",
-    "iot_class" : "weather",
-    "country": "CH",
-    "render_readme": true
-  }
+  "name": "Meteo Swiss (forked)",
+  "render_readme": true,
+  "domains": "weather",
+  "iot_class": "weather",
+  "country": "CH"
+}
