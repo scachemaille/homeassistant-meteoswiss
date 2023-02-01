@@ -1,24 +1,42 @@
 {
     "config": {
         "abort": {
-            "already_configured": "City already configured",
+            "already_configured": "Already configured",
             "unknown": "Unknown error: please retry later"
         },
         "error": {
-            "invalid_station_name": "Station name is Invalid please check station list",
-            "invalid_postcode": "Post code is invalid this integration work only with Switzerland post code",
-            "invalid_station_id": "Station name not found. Please check https://bit.ly/2zzE36d for station list"
+            "lat": "The supplied latitude does not fall between -90 y 90 degrees",
+            "lon": "The supplied latitude does not fall between -180 y 180 degrees",
+            "invalid_station_name": "Station name is invalid.  Please check https://rudd-o.com/meteostations for station list.",
+            "invalid_postcode": "Post code is invalid.  This integration work only with Switzerland post code",
+            "invalid_station_id": "Station name not found. Please check https://rudd-o.com/meteostations for station list.",
+            "empty_name": "The display name is empty",
+            "update_interval_too_low": "The update interval is too low.  Must be minimum 1 minute."
         },
         "step": {
             "user": {
                 "data": {
-                    "name": "Display name",
-                    "postcode": "Postcode",
-                    "station": "Realtime weather station",
-                    "enablesensors": "Enable Sensors"
+                    "latitude": "Latitude",
+                    "longitude": "Longitude"
                 },
-                "description": "Enter the postal code and the station name",
-                "title": "Meteo Swiss"
+                "description": "Confirm your geographical position.  This will be used to guess the closest real-time weather station and approximate your postal code for forecasts.",
+                "title": "Location"
+            },
+            "user_two": {
+                "data": {
+                    "postcode": "Postal code"
+                },
+                "description": "The postal code is used to look up the 5-day forecast.",
+                "title": "Postal code"
+            },
+            "user_three": {
+                "data": {
+                    "station": "Real-time weather station",
+                    "name": "Display name",
+                    "update_interval": "Update interval (minutes)"
+                },
+                "description": "The real-time weather station is used to look up the current weather.  https://rudd-o.com/meteostations lists the stations.",
+                "title": "Weather station"
             }
         }
     }

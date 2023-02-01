@@ -1,4 +1,3 @@
-  
 {
     "config": {
         "abort": {
@@ -6,20 +5,38 @@
             "unknown": "Ukjent feil: prøv på nytt senere"
         },
         "error": {
-            "invalid_station_name": "Stasjonsnavnet er ugyldig, vennligst sjekk stasjonslisten",
+            "lat": "The supplied latitude does not fall between -90 y 90 degrees",
+            "lon": "The supplied latitude does not fall between -180 y 180 degrees",
+            "invalid_station_name": "Stasjonsnavnet er ugyldig. Vennligst sjekk https://rudd-o.com/meteostations for stasjonsliste",
             "invalid_postcode": "Postnummer er ugyldig. Denne integrasjonen fungerer bare med Sveits postnummer",
-            "invalid_station_id": "Stasjonsnavnet ble ikke funnet. Vennligst sjekk https://bit.ly/2zzE36d for stasjonsliste"
+            "invalid_station_id": "Stasjonsnavnet ble ikke funnet. Vennligst sjekk https://rudd-o.com/meteostations for stasjonsliste",
+            "empty_name": "The display name is empty",
+            "update_interval_too_low": "The update interval is too low.  Must be minimum 1 minute."
         },
         "step": {
             "user": {
                 "data": {
-                    "name": "Visningsnavn",
-                    "postcode": "Postnummer",
-                    "station": "Sanntids værstasjon",
-                    "enablesensors": "Aktiver sensorer"
+                    "latitude": "Latitude",
+                    "longitude": "Longitude"
                 },
-                "description": "Skriv inn postnummeret og stasjonsnavnet",
-                "title": "Meteo Swiss"
+                "description": "Confirm your geographical position.  This will be used to guess the closest real-time weather station and approximate your postal code for forecasts.",
+                "title": "Location"
+            },
+            "user_two": {
+                "data": {
+                    "postcode": "Postnummer"
+                },
+                "description": "The postal code is used to look up the 5-day forecast.",
+                "title": "Postnummer"
+            },
+            "user_three": {
+                "data": {
+                    "station": "Sanntids værstasjon",
+                    "name": "Visningsnavn",
+                    "update_interval": "Oppdateringsintervall i minutter"
+                },
+                "description": "The real-time weather station is used to look up the current weather.  https://rudd-o.com/meteostations lists the stations.",
+                "title": "Weather station"
             }
         }
     }

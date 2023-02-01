@@ -1,11 +1,23 @@
 import logging
 import pprint
 
-from hamsclientfork import meteoSwissClient
-from homeassistant.helpers.entity import Entity
 
+from homeassistant.components.sensor import (
+    SensorEntity,
+)
+
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from . import MeteoSwissDataUpdateCoordinator
+
+from homeassistant.const import STATE_UNAVAILABLE
 
 from .const import (
+    CONF_POSTCODE,
+    CONF_STATION,
     DOMAIN,
     SENSOR_TYPES,
     SENSOR_TYPE_CLASS,
@@ -18,23 +30,40 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass, config, async_add_entities):
-    _LOGGER.debug("Starting async setup platform")
-    client = hass.data[DOMAIN]["client"]
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+):
+    """Set up all sensors."""
+    _LOGGER.debug("Starting async setup platform for sensor")
+    c: MeteoSwissDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
-        [MeteoSwissSensor(typ, client) for typ in SENSOR_TYPES],
+        [MeteoSwissSensor(entry.entry_id, typ, c) for typ in SENSOR_TYPES],
         True,
     )
 
 
-class MeteoSwissSensor(Entity):
-    def __init__(self, sensor_type, client: meteoSwissClient):
-        self._client = client
-        if client is None:
-            _LOGGER.error("Error empty client")
+class MeteoSwissSensor(
+    CoordinatorEntity[MeteoSwissDataUpdateCoordinator],
+    SensorEntity,
+):
+    """Represents a sensor from Meteo Swiss."""
+
+    def __init__(
+        self,
+        integration_id: str,
+        sensor_type,
+        coordinator: MeteoSwissDataUpdateCoordinator,
+    ):
+        super().__init__(coordinator)
+        self._attr_unique_id = "sensor.%s-%s" % (integration_id, sensor_type)
         self._state = None
         self._type = sensor_type
+        self._data = coordinator.data
+        self._attr_station = coordinator.data[CONF_STATION]
+        self._attr_post_code = coordinator.data[CONF_POSTCODE]
 
     @property
     def name(self):
@@ -43,20 +72,14 @@ class MeteoSwissSensor(Entity):
         return f"{self._data['name']} {x}"
 
     @property
-    def unique_id(self):
-        """Return the unique id of the sensor."""
-        return self.name
-
-    @property
     def state(self):
-
         dataId = SENSOR_TYPES[self._type][SENSOR_DATA_ID]
         try:
             return self._data["condition"][0][dataId]
         except Exception as exc:
             _LOGGER.warning("self._data['condition'][0][dataId]: %s:", exc)
-            _LOGGER.warning("self._data: %s: %s", pprint.pformat(self._data))
-            return None
+            _LOGGER.warning("self._data:\n%s", pprint.pformat(self._data))
+            return STATE_UNAVAILABLE
 
     @property
     def unit_of_measurement(self):
@@ -73,6 +96,8 @@ class MeteoSwissSensor(Entity):
         """Return the device class of the sensor."""
         return SENSOR_TYPES[self._type][SENSOR_TYPE_CLASS]
 
-    def update(self):
-        # self._client.update()
-        self._data = self._client.get_data()
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle data update."""
+        self._data = self.coordinator.data
+        self.async_write_ha_state()

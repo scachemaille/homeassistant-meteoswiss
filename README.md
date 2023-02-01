@@ -9,11 +9,17 @@ reinstalling the integration through this repository.
 
 ## Known issues
 
-None at this time.
+When you upgrade, a number of entities will be created, and a number of other
+entities will be orphaned.  The recommended upgrade path is to delete the
+existing integration, upgrade, restart Home Assistant, and re-add the integration.
+If you don't do this, you will have to delete entities no longer supplied
+by the integration.
+
+This step is necessary because the old integration did not provide unique IDs.
 
 ## Information
 
-Data from meteo swiss official website
+Data from Meteo Swiss official website
 
 The forecast is extracted from the meteo swiss website
 
@@ -24,7 +30,10 @@ Current conditions are from official data files.
 
 ## Configuration
 
-- Got to home assistant configuration :
+- First make sure that your Home Assistant's basic setup (latitude, longitude)
+  is correct.  This information is used to set up the weather station.
+
+- Got to home assistant configuration:
 
 ![enter image description here](https://github.com/websylv/homeassistant-meteoswiss-img/raw/master/mRemoteNG_br58RnFLHN.png)
   
