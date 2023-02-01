@@ -1,11 +1,35 @@
 # homeassistant-meteoswiss (forked)
 
-Home Assistant meteo swiss integration.
+This is the Meteo Swiss integration for Home Assistant.
 
-This was forked from https://github.com/websylv/homeassistant-meteoswiss because
-the original author is unresponsive.  Use this in your Home Assistant by deleting
-the original integration, then adding this as a custom HACS repo, and then
-reinstalling the integration through this repository.
+## Features
+
+* Interactive setup flow with reasonably good explanations of the
+  settings.
+* Lets you determine the real-time weather update frequency.
+* Lets you customize all entities this integration provides
+  (every entity has a unique ID).
+* Detects when your real-time weather station has been retired,
+  and offers suggestions on how to fix the issue.
+* Code is much cleaner and works properly.
+
+## Information sources
+
+Data comes from the Meteo Swiss official data sources.
+Forecasts are extracted from the Meteo Swiss API.
+Current conditions are from official data files.
+
+The real-time data for the stations can be found at https://rudd-o.com/meteostations
+(this is a shortlink to it).  Information on the provided values is
+available at [https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt](https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt).
+
+### Privacy
+
+This integration uses:
+
+* https://nominatim.openstreetmap.org to guess your post code
+* https://data.geo.admin.ch/ for current weather conditions
+* https://www.meteosuisse.admin.ch for forecast
 
 ## Known issues
 
@@ -15,86 +39,77 @@ existing integration, upgrade, restart Home Assistant, and re-add the integratio
 If you don't do this, you will have to delete entities no longer supplied
 by the integration.
 
-This step is necessary because the old integration did not provide unique IDs.
+This situation is a one-time thing.  The re-setup step is necessary because
+the old integration did not provide unique IDs.
 
-## Information
+## Origins of this work
 
-Data from Meteo Swiss official website
-
-The forecast is extracted from the meteo swiss website
-
-Current conditions are from official data files.
+This was forked from https://github.com/websylv/homeassistant-meteoswiss because
+the original author is unresponsive and the original integration was
+broken beyond fixing.  Use this in your Home Assistant by deleting
+the original integration, then adding this as a custom HACS repo, and
+then reinstalling the integration through this repository.
 
 ## Installation
 
+Add this integration as a custom repository to HACS.  If you use
+HACS you already know the generic instructions on how to do this.
 
 ## Configuration
 
 - First make sure that your Home Assistant's basic setup (latitude, longitude)
-  is correct.  This information is used to set up the weather station.
+  is correct.  This information is used to help you set up the weather station.
+  If, however, it is not correct, you can still override it later.
 
-- Got to home assistant configuration:
+- Get to the Home Asssistant settings screen:
 
-![enter image description here](https://github.com/websylv/homeassistant-meteoswiss-img/raw/master/mRemoteNG_br58RnFLHN.png)
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/settings.png)
   
-- Then click on "integrations":
+- Then click on "Devices & Services":
 
-![enter image description here](https://github.com/websylv/homeassistant-meteoswiss-img/raw/master/jDBoFYSD9L.png)
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/devicesservices.png)
 
-- Than add a new integration
+- Than add a new integration:
 
-![enter image description here](https://github.com/websylv/homeassistant-meteoswiss-img/raw/master/mRemoteNG_Xu9QUdjj7O.png)
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/add.png)
   
-- Search for "meteo-swiss"
+- Search for *Meteo Swiss* and then proceed:
 
-![enter image description here](https://github.com/websylv/homeassistant-meteoswiss-img/raw/master/mRemoteNG_ZAipe8WopB.png)
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/search.png)
 
 - By default the integration will try to determine the best settings for you
-based on you location:
+  based on your Home zone latitude and longitude:
 
-![enter image description here](https://github.com/websylv/homeassistant-meteoswiss-img/raw/master/mRemoteNG_ZbyekuPQly.png)
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/latitude.png)
 
-If you are not happy with the settings you can update the settings
+- The next screen will ask you (with a good guess) about your postal code:
 
-Meteo Swiss weather station code. This code can be found in : [https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt](https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt)\
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/postalcode.png)
 
-  
+- Finally, you get to select the real-time weather station closest to you
+  (a good guess is provided) and name your location:
+
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/weatherstation.png)
+
+If you are not happy with the settings, in a future release you
+will be able to update them.
 
 ## Debug
-
   
+In case of problem with the integration, please open an issue on this
+repository with the logs in debug mode.
 
-In case of problem with the integration
-
-Please open an issue on github with the logs in debug mode.
-
-You need to activate componenent debug log by adding "custom_components.meteo-swiss: debug" to your configuration.yaml
-
-  
+You need to activate the component debug log in your
+`configuration.yaml`, and restarting Home Assistant:
+ 
 
 ```YAML
 
 logger:
-default: warning
-logs:
-[...]
-hamsclient.client: debug
-custom_components.meteo-swiss: debug
-
+  default: warning
+  logs:
+    # maybe more stuff here[...]
+    hamsclient.client: debug
+    hamsclientfork.client: debug
+    custom_components.meteo-swiss: debug
 ```
-
-  
-
-## Privacy
-
-  
-
-This integration use :
-
-  
-
-https://nominatim.openstreetmap.org for geolocaliation if you don't set you post code
-
-https://data.geo.admin.ch/ for current weather conditions
-
-https://www.meteosuisse.admin.ch for forecast
