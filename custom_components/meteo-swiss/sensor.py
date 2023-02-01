@@ -74,11 +74,15 @@ class MeteoSwissSensor(
     @property
     def state(self):
         dataId = SENSOR_TYPES[self._type][SENSOR_DATA_ID]
+        if "condition" not in self._data or not self._data["condition"]:
+            return STATE_UNAVAILABLE
         try:
             return self._data["condition"][0][dataId]
-        except Exception as exc:
-            _LOGGER.warning("self._data['condition'][0][dataId]: %s:", exc)
-            _LOGGER.warning("self._data:\n%s", pprint.pformat(self._data))
+        except Exception:
+            _LOGGER.warning(
+                "Real-time weather station returned bad data:\n%s",
+                pprint.pformat(self._data),
+            )
             return STATE_UNAVAILABLE
 
     @property

@@ -2,6 +2,7 @@
 import datetime
 import logging
 import pprint
+import time
 
 from async_timeout import timeout
 from typing import Any
@@ -9,6 +10,8 @@ from homeassistant.core import Config, HomeAssistant
 from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
 from homeassistant.helpers.typing import HomeAssistantType
 from hamsclientfork import meteoSwissClient
+from homeassistant.helpers.issue_registry import IssueSeverity
+
 from .const import (
     CONF_NAME,
     CONF_POSTCODE,
@@ -22,9 +25,11 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
 )
+from homeassistant.helpers import issue_registry as ir
 
 _LOGGER = logging.getLogger(__name__)
 PLATFORMS = [Platform.SENSOR, Platform.WEATHER]
+MAX_CONTINUOUS_ERROR_TIME = 60 * 60
 
 
 async def async_setup(hass: HomeAssistant, config: Config):
@@ -114,6 +119,7 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         station: str,
     ) -> None:
         """Initialize."""
+        self.first_error = None
         self.hass = hass
         self.client = client
         self.post_code = post_code
@@ -140,6 +146,34 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     self.client.get_data,
                 )
                 _LOGGER.debug("Data obtained:\n%s", pprint.pformat(data))
+                raise_ = False
+                if "condition" not in data or not data["condition"] or raise_:
+                    # Oh no.  We could not retrieve the URL.
+                    # We try 20 times.  If it does not succeed,
+                    # we will induce a config error.
+                    _LOGGER.warning(
+                        "Station %s provided us with no real-time data",
+                        self.station,
+                    )
+                    if self.first_error is None:
+                        self.first_error = time.time()
+
+                    m = MAX_CONTINUOUS_ERROR_TIME
+                    if raise_ or (time.time() - self.first_error) > m:
+                        ir.async_create_issue(
+                            self.hass,
+                            DOMAIN,
+                            f"{self.station}_provides_no_data_{DOMAIN}",
+                            is_fixable=False,
+                            is_persistent=False,
+                            severity=IssueSeverity.ERROR,
+                            translation_key="station_no_data",
+                            translation_placeholders={
+                                "station": self.station,
+                            },
+                        )
+                else:
+                    self.first_error = None
         except Exception as exc:
             raise UpdateFailed(exc) from exc
         data[CONF_STATION] = self.station

@@ -85,14 +85,19 @@ class MeteoSwissWeather(
 
     @property
     def native_temperature(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return float(self._condition[0]["tre200s0"])
         except Exception:
             _LOGGER.exception("Error converting temp: %s", self._condition)
-            return None
 
     @property
     def native_pressure(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return float(self._condition[0]["prestas0"])
         except Exception:
@@ -100,10 +105,12 @@ class MeteoSwissWeather(
                 "Error converting pressure (qfe): %s",
                 self._condition,
             )
-            return None
 
     @property
     def pressure_qff(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return float(self.condition[0]["pp0qffs0"])
         except Exception:
@@ -111,10 +118,12 @@ class MeteoSwissWeather(
                 "Error converting pressure (qff): %s",
                 self._condition,
             )
-            return None
 
     @property
     def pressure_qnh(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return float(self.condition[0]["pp0qnhs0"])
         except Exception:
@@ -122,7 +131,6 @@ class MeteoSwissWeather(
                 "Error converting pressure (qnh): %s",
                 self._condition,
             )
-            return None
 
     @property
     def state(self):
@@ -143,6 +151,9 @@ class MeteoSwissWeather(
 
     @property
     def humidity(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return float(self._condition[0]["ure200s0"])
         except Exception:
@@ -153,6 +164,9 @@ class MeteoSwissWeather(
 
     @property
     def native_wind_speed(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return float(self._condition[0]["fu3010z0"])
         except Exception:
@@ -160,7 +174,6 @@ class MeteoSwissWeather(
                 "Unable to convert windSpeed value: %s",
                 self._condition,
             )
-            return None
 
     @property
     def attribution(self):
@@ -171,6 +184,9 @@ class MeteoSwissWeather(
 
     @property
     def wind_bearing(self):
+        if not self._condition:
+            # Real-time weather station provides no data.
+            return
         try:
             return self._condition[0]["dkl010z0"]
         except Exception:
@@ -178,7 +194,6 @@ class MeteoSwissWeather(
                 "Unable to get wind_bearing from data: %s",
                 self._condition,
             )
-            return None
 
     @property
     def forecast(self):

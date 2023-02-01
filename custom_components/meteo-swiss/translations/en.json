@@ -1,4 +1,11 @@
 {
+    "issues": {
+        "station_no_data": {
+            "title": "Meteo Swiss weather station appears to be gone",
+            "description": "The real-time weather station Meteo Swiss is using ({station}) is no longer offering data.  Currently, the only repair possible involves removing and re-adding the Meteo Swiss integration, selecting a new real-time weather station.  Until this repair is made, all real-time weather sensors and reports will show as unavailable.",
+            "fix_flow": {}
+        }
+    },
     "config": {
         "abort": {
             "already_configured": "Already configured",
@@ -8,7 +15,7 @@
             "lat": "The supplied latitude does not fall between -90 y 90 degrees",
             "lon": "The supplied latitude does not fall between -180 y 180 degrees",
             "invalid_station_name": "Station name is invalid.  Please check https://rudd-o.com/meteostations for station list.",
-            "invalid_postcode": "Post code is invalid.  This integration work only with Switzerland post code",
+            "invalid_postcode": "Postal code is invalid.  This integration work only with Switzerland postal codes.",
             "invalid_station_id": "Station name not found. Please check https://rudd-o.com/meteostations for station list.",
             "empty_name": "The display name is empty",
             "update_interval_too_low": "The update interval is too low.  Must be minimum 1 minute."

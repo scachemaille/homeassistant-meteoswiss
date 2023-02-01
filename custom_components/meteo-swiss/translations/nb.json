@@ -1,4 +1,11 @@
 {
+    "issues": {
+        "station_no_data": {
+            "title": "Meteo Swiss weather station appears to be gone",
+            "description": "The real-time weather station Meteo Swiss is using ({station}) is no longer offering data.  Currently, the only repair possible involves removing and re-adding the Meteo Swiss integration, selecting a new real-time weather station.  Until this repair is made, all real-time weather sensors and reports will show as unavailable.",
+            "fix_flow": {}
+        }
+    },
     "config": {
         "abort": {
             "already_configured": "Byen er allerede konfigurert",
