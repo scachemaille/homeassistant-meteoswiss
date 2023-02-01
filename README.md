@@ -11,6 +11,8 @@ This is the Meteo Swiss integration for Home Assistant.
   (every entity has a unique ID).
 * Detects when your real-time weather station has been retired,
   and offers suggestions on how to fix the issue.
+* Imports the old Meteo Swiss YAML configuration and alerts
+  you to the needed removal of the deprecated YAML.
 * Code is much cleaner and works properly.
 
 ## Installation

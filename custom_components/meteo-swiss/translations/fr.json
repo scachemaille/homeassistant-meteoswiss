@@ -1,9 +1,12 @@
 {
     "issues": {
+        "deprecated_yaml": {
+            "title": "The Meteo Swiss YAML configuration is being removed",
+            "description": "Configuring Meteo Swiss using YAML is being removed.\n\nYour existing YAML configuration has been imported into the UI automatically.\n\nRemove the Swiss Meteo configuration from your configuration.yaml file and restart Home Assistant to fix this issue."
+        },
         "station_no_data": {
             "title": "Meteo Swiss weather station appears to be gone",
-            "description": "The real-time weather station Meteo Swiss is using ({station}) is no longer offering data.  Currently, the only repair possible involves removing and re-adding the Meteo Swiss integration, selecting a new real-time weather station.  Until this repair is made, all real-time weather sensors and reports will show as unavailable.",
-            "fix_flow": {}
+            "description": "The real-time weather station Meteo Swiss is using ({station}) is no longer offering data.\n\nCurrently, the only repair possible involves removing and re-adding the Meteo Swiss integration, selecting a new real-time weather station.\n\nUntil this repair is made, all real-time weather sensors and reports coming from this station will show as unavailable."
         }
     },
     "config": {

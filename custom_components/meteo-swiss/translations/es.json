@@ -1,9 +1,12 @@
 {
     "issues": {
+        "deprecated_yaml": {
+            "title": "La configuración Meteo Swiss mediante YAML configuration está obsoleta",
+            "description": "Configurar Meteo Swiss mediante YAML será removida a futuro.\n\nSu configuración existente ha sido importada automáticamente a su interfaz de usuario.\n\nRemueva la sección de configuración de Swiss Meteo configuration de su archivo configuration.yaml file y reinicie Home Assistant para solucionar esta advertencia."
+        },
         "station_no_data": {
-            "title": "Meteo Swiss weather station appears to be gone",
-            "description": "The real-time weather station Meteo Swiss is using ({station}) is no longer offering data.  Currently, the only repair possible involves removing and re-adding the Meteo Swiss integration, selecting a new real-time weather station.  Until this repair is made, all real-time weather sensors and reports will show as unavailable.",
-            "fix_flow": {}
+            "title": "Una estación meteorológica de tiempo real parece estar ausente",
+            "description": "La estación de tiempo real que se usa en Meteo Swiss ({station}) parece ya no ofrecer datos.\n\nDe momento, la única reparación posible es remover esta integración y volver a agregarla, seleccionande una nueva estación meteorológica.\n\nHasta que esta reparación sea efectuada, sus sensores y el estado del tiempo actual aparecerán como no disponibles."
         }
     },
     "config": {
@@ -14,9 +17,9 @@
         "error": {
             "lat": "La latitud especificada no está entre -90 y 90 grados",
             "lon": "La longitud especificada no está entre -180 y 180 grados",
-            "invalid_station_name": "Estación inválida (deben ser 3 caracteres).  Verifique los identificadores aquí: https://rudd-o.com/meteostations",
+            "invalid_station_name": "Estación inválida (deben ser 3 caracteres).  Verifique las estaciones aquí: https://rudd-o.com/meteostations",
             "invalid_postcode": "Código postal incorrecto.  Esta integración sólo funciona con códigos postales suizos.",
-            "invalid_station_id": "Identificador de estación inválido.  Verifique los identificadores aquí: https://rudd-o.com/meteostations",
+            "invalid_station_id": "Identificador de estación inválido.  Verifique las estaciones aquí: https://rudd-o.com/meteostations",
             "empty_name": "El nombre para mostrar es inválido",
             "update_interval_too_low": "La frecuencia de actualización es muy baja.  Debe ser mínimo un minuto."
         },
@@ -26,23 +29,23 @@
                     "latitude": "Latitud",
                     "longitude": "Longitud"
                 },
-                "description": "Confirm your geographical position.  This will be used to guess the closest real-time weather station and approximate your postal code for forecasts.",
+                "description": "Confirme su ubicación geográfica.  Esta información será usada para sugerir un código postal y una estación meteorológica adecuadas.",
                 "title": "Ubicación"
             },
             "user_two": {
                 "data": {
                     "postcode": "Código postal"
                 },
-                "description": "The postal code is used to look up the 5-day forecast.",
+                "description": "El código postal se usa para obtener el pronóstico de los siguientos 5 días.",
                 "title": "Código postal"
             },
             "user_three": {
                 "data": {
-                    "station": "Estación metereológica en tiempo real",
+                    "station": "Estación meteorológica en tiempo real",
                     "name": "Nombre a mostrar",
                     "update_interval": "Frecuencia de actualización en minutos"
                 },
-                "description": "The real-time weather station is used to look up the current weather.  https://rudd-o.com/meteostations lists the stations.",
+                "description": "La estación en tiempo real que se usará para obtener el clima actual.  https://rudd-o.com/meteostations lista las estaciones.",
                 "title": "Estación meteorológica"
             }
         }

@@ -15,6 +15,8 @@ from .const import (
     DEFAULT_UPDATE_INTERVAL,
 )
 from hamsclientfork import meteoSwissClient
+from homeassistant.helpers.issue_registry import IssueSeverity
+from homeassistant.helpers import issue_registry as ir
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -254,4 +256,12 @@ class MeteoSwissFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_import(self, user_input):
         """Import a config entry."""
+        ir.async_create_issue(
+            self.hass,
+            DOMAIN,
+            "deprecated_yaml",
+            is_fixable=False,
+            severity=IssueSeverity.WARNING,
+            translation_key="deprecated_yaml",
+        )
         return await self.async_step_user(user_input)
