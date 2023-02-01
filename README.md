@@ -17,6 +17,8 @@ This is the Meteo Swiss integration for Home Assistant.
 
 ## Installation
 
+*Instructions on migration from the old unmaintained version are below.*
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 Add this integration as a custom repository to HACS.  If you use
@@ -27,7 +29,7 @@ HACS setup.
 
 Now you are ready to add one or more instances of the integration.
 
-## Configuration
+## Setup
 
 - First make sure that your Home Assistant's basic setup (latitude, longitude)
   is correct.  This information is used to help you set up the weather station.
@@ -122,3 +124,10 @@ the original author is unresponsive and the original integration was
 broken beyond fixing.  Use this in your Home Assistant by deleting
 the original integration, then adding this as a custom HACS repo, and
 then reinstalling the integration through this repository.
+
+### How to migrate away from websylv's integration
+
+1. First remove any successfully-setup Swiss Meteo integrations.
+2. Then remove the integration itself from HACS.
+3. Add this one as a custom integration repo in HACS, then install it to your Home Assistant.  See above for installation instructions.
+4. Now you can add the integration in Devices & Settings.  See above for setup instructions.
