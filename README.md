@@ -2,8 +2,6 @@
 
 This is the Meteo Swiss integration for Home Assistant.
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-
 ## Features
 
 * Interactive setup flow with reasonably good explanations of the
@@ -15,18 +13,9 @@ This is the Meteo Swiss integration for Home Assistant.
   and offers suggestions on how to fix the issue.
 * Code is much cleaner and works properly.
 
-## Known issues
-
-When you upgrade, a number of entities will be created, and a number of other
-entities will be orphaned.  The recommended upgrade path is to delete the
-existing integration, upgrade, restart Home Assistant, and re-add the integration.
-If you don't do this, you will have to delete entities no longer supplied
-by the integration.
-
-This situation is a one-time thing.  The re-setup step is necessary because
-the old integration did not provide unique IDs.
-
 ## Installation
+
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 Add this integration as a custom repository to HACS.  If you use
 HACS you already know the generic instructions on how to do this.
@@ -77,15 +66,14 @@ will be able to update them.
 
 ## Troubleshooting
   
-In case of problem with the integration, please open an issue on this
-repository with the logs in debug mode.
+In case of problem with the integration, please open an issue on
+[this repository](https://github.com/Rudd-O/homeassistant-meteoswiss)
+explaining the issue and attaching the logs in debug mode.
 
-You need to activate the component debug log in your
+To obtain logs, activate the component debug log in your
 `configuration.yaml`, and restarting Home Assistant:
- 
 
 ```YAML
-
 logger:
   default: warning
   logs:
@@ -95,6 +83,17 @@ logger:
     custom_components.meteo-swiss: debug
 ```
 
+### Known issues
+
+* When you upgrade, a number of entities will be created, and a number of other
+  entities will be orphaned.  The recommended upgrade path is to delete the
+  existing integration, upgrade, restart Home Assistant, and re-add the integration.
+  If you don't do this, you will have to delete entities no longer supplied
+  by the integration.  This situation is a one-time thing.  The re-setup step
+  is necessary because the old integration did not provide unique IDs.
+* There is a migration step in the code that is supposed to migrate away
+  from `configuration.yaml` setup.  I have not tested it, but you should know
+  that this is deprecated.
 
 ## Information sources
 
