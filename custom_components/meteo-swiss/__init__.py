@@ -120,6 +120,7 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     ) -> None:
         """Initialize."""
         self.first_error = None
+        self.error_raised = False
         self.hass = hass
         self.client = client
         self.post_code = post_code
@@ -146,8 +147,7 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     self.client.get_data,
                 )
                 _LOGGER.debug("Data obtained:\n%s", pprint.pformat(data))
-                raise_ = False
-                if "condition" not in data or not data["condition"] or raise_:
+                if "condition" not in data or not data["condition"]:
                     # Oh no.  We could not retrieve the URL.
                     # We try 20 times.  If it does not succeed,
                     # we will induce a config error.
@@ -159,7 +159,8 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                         self.first_error = time.time()
 
                     m = MAX_CONTINUOUS_ERROR_TIME
-                    if raise_ or (time.time() - self.first_error) > m:
+                    last_error = time.time() - self.first_error
+                    if not self.error_raised and last_error > m:
                         ir.async_create_issue(
                             self.hass,
                             DOMAIN,
@@ -172,8 +173,10 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                                 "station": self.station,
                             },
                         )
+                        self.error_raised = True
                 else:
                     self.first_error = None
+                    self.error_raised = False
         except Exception as exc:
             raise UpdateFailed(exc) from exc
         data[CONF_STATION] = self.station
