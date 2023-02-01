@@ -1,0 +1,10 @@
+{
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/../hamsclientfork"
+    ],
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/../hamsclientfork"
+    ],
+    "python.formatting.provider": "black"
+}
