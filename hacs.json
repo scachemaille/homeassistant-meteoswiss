@@ -1,6 +1,5 @@
 {
   "name": "Meteo Swiss (forked)",
   "render_readme": true,
-  "iot_class": "weather",
   "country": "CH"
 }
