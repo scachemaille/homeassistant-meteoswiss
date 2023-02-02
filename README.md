@@ -23,9 +23,22 @@ This is the Meteo Swiss integration for Home Assistant.
 
 Add this integration as a custom repository to HACS.  If you use
 HACS you already know the generic instructions on how to do this.
+Here is how it looks like on the add custom repo screen:
 
-Once added as a custom repository, install the integration to your
-HACS setup.
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/addcustomrepo.png)
+
+Once added as a custom repository, add the integration to your
+HACS setup:
+
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/addrepository.png)
+
+Once done you should see a pending restart box:
+
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/pendingrestart.png)
+
+Restart your Home Assistant:
+
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/restart.png)
 
 Now you are ready to add one or more instances of the integration.
 
@@ -64,6 +77,10 @@ Now you are ready to add one or more instances of the integration.
   (a good guess is provided) and name your location:
 
 ![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/weatherstation.png)
+
+- Your task is done and your integration is working.
+
+![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/addedandworking.png)
 
 If you are not happy with the settings, in a future release you
 will be able to update them.
