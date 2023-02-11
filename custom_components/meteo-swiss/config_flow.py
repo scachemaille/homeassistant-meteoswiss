@@ -14,7 +14,7 @@ from .const import (
     CONF_UPDATE_INTERVAL,
     DEFAULT_UPDATE_INTERVAL,
 )
-from hamsclientfork import meteoSwissClient
+from hamsclientfork import meteoSwissClient, StationType
 from homeassistant.helpers.issue_registry import IssueSeverity
 from homeassistant.helpers import issue_registry as ir
 
@@ -211,10 +211,15 @@ class MeteoSwissFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             )
         else:
             station = await self.hass.async_add_executor_job(
-                client.get_closest_station, self._lat, self._lon
+                client.get_closest_station,
+                self._lat,
+                self._lon,
+                StationType.WEATHER,
             )
             if self._stations_map is None:
-                self._stations_map = client._allStations
+                self._stations_map = client.get_all_stations(
+                    StationType.WEATHER,
+                )
             self._stations = dict(
                 ("%s (%s)" % (value["name"], key), key)
                 for key, value in self._stations_map.items()

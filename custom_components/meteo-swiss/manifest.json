@@ -12,7 +12,7 @@
     ],
     "config_flow": true,
     "requirements": [
-        "hamsclientfork==0.2.3",
+        "hamsclientfork==0.2.5",
         "geopy>=2.0"
     ]
 }
