@@ -15,6 +15,8 @@ This is the Meteo Swiss integration for Home Assistant.
   you to the needed removal of the deprecated YAML.
 * Code is much cleaner and works properly.
 
+See below for common issues.
+
 ## Installation
 
 *Instructions on migration from the old unmaintained version are below.*
@@ -106,6 +108,13 @@ logger:
 
 ### Known issues
 
+* Users of older versions of this integration may experience a problem whereby
+  the real-time weather sensors provided by the integration don't update,
+  and errors on the log appear frequently regarding this issue.  This is caused
+  by an older version of the code letting people configure precipitation stations
+  as if they were weather stations.  This is no longer possible, but if you
+  have this issue, you'll have to upgrade this integration, delete the configuration
+  and re-add it — the erroneous station no longer will appear as an option.
 * When you upgrade, a number of entities will be created, and a number of other
   entities will be orphaned.  The recommended upgrade path is to delete the
   existing integration, upgrade, restart Home Assistant, and re-add the integration.
