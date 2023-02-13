@@ -67,16 +67,20 @@ Now you are ready to add one or more instances of the integration.
 ![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/search.png)
 
 - By default the integration will try to determine the best settings for you
-  based on your Home zone latitude and longitude:
+  based on your Home zone latitude and longitude (which you can override):
 
 ![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/latitude.png)
 
-- The next screen will ask you (with a good guess) about your postal code:
+- The next screen will ask you (with a good guess) about your postal code, and update interval.  This information
+  will be used by the weather entity — and the name onscreen is what your weather entity will be named after.
 
 ![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/postalcode.png)
 
 - Finally, you get to select the real-time weather station closest to you
-  (a good guess is provided) and name your location:
+  (a good guess is provided) and name your location.  You can select no
+  weather station if you so desire — useful if there is no real-time
+  weather station near where you live — in which case the real-time sensor
+  data is simply not provided as sensors.
 
 ![enter image description here](https://github.com/Rudd-O/homeassistant-meteoswiss/raw/master/docs/weatherstation.png)
 
