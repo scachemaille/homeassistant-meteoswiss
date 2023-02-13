@@ -166,7 +166,7 @@ then reinstalling the integration through this repository.
 
 ### How to migrate away from websylv's integration
 
-1. First remove any successfully-setup Swiss Meteo integrations.
+1. First remove any successfully-setup Meteo Swiss integrations.
 2. Remove the integration itself from HACS.
 3. Remove the YAML config you might have been using before.
 3. Add this repository as a custom integration repo in HACS, then install it to your Home Assistant.  See above for installation instructions.
