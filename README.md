@@ -108,6 +108,9 @@ logger:
 
 ### Known issues
 
+* Users of older versions of this integration were not getting updates frequently
+  enough.  This should be fixed in the latest versions, with the proviso that
+  Home Assistant must be restarted after updating this integration.
 * Users of older versions of this integration may experience a problem whereby
   the real-time weather sensors provided by the integration don't update,
   and errors on the log appear frequently regarding this issue.  This is caused

@@ -62,7 +62,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     _LOGGER.debug("Client obtained")
 
     interval = datetime.timedelta(
-        entry.data.get(
+        seconds=entry.data.get(
             CONF_UPDATE_INTERVAL,
             DEFAULT_UPDATE_INTERVAL,
         )
