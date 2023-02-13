@@ -7,6 +7,10 @@
         "station_no_data": {
             "title": "Una estación meteorológica de tiempo real parece estar ausente",
             "description": "La estación de tiempo real que se usa en Meteo Swiss ({station}) parece ya no ofrecer datos.\n\nDe momento, la única reparación posible es remover esta integración y volver a agregarla, seleccionande una nueva estación meteorológica.\n\nHasta que esta reparación sea efectuada, sus sensores y el estado del tiempo actual aparecerán como no disponibles."
+        },
+        "improperly_configured": {
+            "title": "La integración  Meteo Swiss no está correctamente configurada",
+            "description": "La integración Meteo Swiss con ID {entry_id} no está correctamente configurada.\n\nPor favor elimine esa entrada de configuración y vuelva a recrearla."
         }
     },
     "config": {
@@ -17,11 +21,11 @@
         "error": {
             "lat": "La latitud especificada no está entre -90 y 90 grados",
             "lon": "La longitud especificada no está entre -180 y 180 grados",
-            "invalid_station_name": "Estación inválida (deben ser 3 caracteres).  Verifique las estaciones aquí: https://rudd-o.com/meteostations",
-            "invalid_postcode": "Código postal incorrecto.  Esta integración sólo funciona con códigos postales suizos.",
-            "invalid_station_id": "Identificador de estación inválido.  Verifique las estaciones aquí: https://rudd-o.com/meteostations",
+            "invalid_station_name": "Estación inválida (deben ser 3 caracteres); verifique las estaciones aquí: https://rudd-o.com/meteostations",
+            "invalid_postcode": "Código postal incorrecto; esta integración sólo funciona con códigos postales suizos",
+            "forecast_name_empty": "El nombre para el pronóstico no puede estar vacío",
             "empty_name": "El nombre para mostrar es inválido",
-            "update_interval_too_low": "La frecuencia de actualización es muy baja.  Debe ser mínimo un minuto."
+            "update_interval_too_low": "La frecuencia de actualización es muy baja; debe ser mínimo un minuto"
         },
         "step": {
             "user": {
@@ -34,19 +38,20 @@
             },
             "user_two": {
                 "data": {
-                    "postcode": "Código postal"
+                    "postcode": "Código postal",
+                    "forecast_name": "Nombre de la entidad de pronóstico (clima)"
                 },
-                "description": "El código postal se usa para obtener el pronóstico de los siguientos 5 días.",
-                "title": "Código postal"
+                "description": "El código postal se usa para obtener el pronóstico de los siguientos 5 días.  El nombre que usted suministre aquí se usará en el nombre de la entidad de pronóstico (clima).",
+                "title": "Pronóstico"
             },
             "user_three": {
                 "data": {
                     "station": "Estación meteorológica en tiempo real",
-                    "name": "Nombre a mostrar",
+                    "real_time_name": "Nombres de las entidades en tiempo real",
                     "update_interval": "Frecuencia de actualización en minutos"
                 },
-                "description": "La estación en tiempo real que se usará para obtener el clima actual.  https://rudd-o.com/meteostations lista las estaciones.",
-                "title": "Estación meteorológica"
+                "description": "The real-time weather station is used to look up the current weather at the station and provide them as sensors.  Selecting the first option of the list disables real-time weather sensors.\n\nIf a weather station is selected, the real-time entity names field is used to name the real-time (sensor) entities.  If no station is chosen, the real-time entity names field is ignored.\n\nhttps://rudd-o.com/meteostations lists the available real-time weather stations.",
+                "title": "Estación meteorológica en tiempo real"
             }
         }
     }

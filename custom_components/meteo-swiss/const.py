@@ -11,13 +11,11 @@ from homeassistant.const import (
     TIME_MINUTES,
 )
 
-ATTRIBUTION_TEMPLATE = (
-    "Weather forecast from MeteoSwiss " + "(station %s, post code %s)"
-)
-
 DOMAIN = "meteo-swiss"
+CONF_FORECAST_NAME = "forecast_name"
 CONF_NAME = CONF_NAME
 CONF_POSTCODE = "postcode"
+CONF_REAL_TIME_NAME = "real_time_name"
 CONF_STATION = "station"
 CONF_FORECASTTYPE = "forecasttype"
 CONF_UPDATE_INTERVAL = "update_interval"

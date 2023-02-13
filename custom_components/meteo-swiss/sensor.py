@@ -17,6 +17,7 @@ from homeassistant.const import STATE_UNAVAILABLE
 
 from .const import (
     CONF_POSTCODE,
+    CONF_REAL_TIME_NAME,
     CONF_STATION,
     DOMAIN,
     SENSOR_TYPES,
@@ -39,10 +40,16 @@ async def async_setup_entry(
     _LOGGER.debug("Starting async setup platform for sensor")
     c: MeteoSwissDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
 
-    async_add_entities(
-        [MeteoSwissSensor(entry.entry_id, typ, c) for typ in SENSOR_TYPES],
-        True,
-    )
+    if c.station:
+        async_add_entities(
+            [MeteoSwissSensor(entry.entry_id, typ, c) for typ in SENSOR_TYPES],
+            True,
+        )
+    else:
+        _LOGGER.debug(
+            "The data update coordinator has no real-time station configured"
+            + " — not providing sensor data."
+        )
 
 
 class MeteoSwissSensor(
@@ -69,7 +76,7 @@ class MeteoSwissSensor(
     def name(self):
         """Return the name of the sensor."""
         x = SENSOR_TYPES[self._type][SENSOR_TYPE_NAME]
-        return f"{self._data['name']} {x}"
+        return f"{self._data[CONF_REAL_TIME_NAME]} {x}"
 
     @property
     def state(self):

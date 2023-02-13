@@ -7,6 +7,10 @@
         "station_no_data": {
             "title": "Meteo Swiss weather station appears to be gone",
             "description": "The real-time weather station Meteo Swiss is using ({station}) is no longer offering data.\n\nCurrently, the only repair possible involves removing and re-adding the Meteo Swiss integration, selecting a new real-time weather station.\n\nUntil this repair is made, all real-time weather sensors and reports coming from this station will show as unavailable."
+        },
+        "improperly_configured": {
+            "title": "Meteo Swiss integration improperly configured",
+            "description": "The Meteo Swiss integration with entry ID {entry_id} is improperly configured.\n\nPlease remove your configuration entry and recreate it."
         }
     },
     "config": {
@@ -17,11 +21,11 @@
         "error": {
             "lat": "The supplied latitude does not fall between -90 y 90 degrees",
             "lon": "The supplied latitude does not fall between -180 y 180 degrees",
-            "invalid_station_name": "Station name is invalid.  Please check https://rudd-o.com/meteostations for station list.",
-            "invalid_postcode": "Postal code is invalid.  This integration work only with Switzerland postal codes.",
-            "invalid_station_id": "Station name not found. Please check https://rudd-o.com/meteostations for station list.",
+            "invalid_station_name": "Station name is invalid; please check https://rudd-o.com/meteostations for station list",
+            "invalid_postcode": "Postal code is invalid; this integration only works with Swiss postal codes",
+            "forecast_name_empty": "Forecast name cannot be empty",
             "empty_name": "The display name is empty",
-            "update_interval_too_low": "The update interval is too low.  Must be minimum 1 minute."
+            "update_interval_too_low": "The update interval is too low; must be at least 1 minute"
         },
         "step": {
             "user": {
@@ -34,19 +38,20 @@
             },
             "user_two": {
                 "data": {
-                    "postcode": "Postal code"
+                    "postcode": "Postal code",
+                    "forecast_name": "Forecast (weather) entity name"
                 },
-                "description": "The postal code is used to look up the 5-day forecast.",
-                "title": "Postal code"
+                "description": "The postal code is used to look up the 5-day forecast.  The name you enter here will be used for the forecast (weather) entity.",
+                "title": "Forecast"
             },
             "user_three": {
                 "data": {
                     "station": "Real-time weather station",
-                    "name": "Display name",
+                    "real_time_name": "Real-time entity names",
                     "update_interval": "Update interval (minutes)"
                 },
-                "description": "The real-time weather station is used to look up the current weather.  https://rudd-o.com/meteostations lists the stations.",
-                "title": "Weather station"
+                "description": "The real-time weather station is used to look up the current weather at the station and provide them as sensors.  Selecting the first option of the list disables real-time weather sensors.\n\nIf a weather station is selected, the real-time entity names field is used to name the real-time (sensor) entities.  If no station is chosen, the real-time entity names field is ignored.\n\nhttps://rudd-o.com/meteostations lists the available real-time weather stations.",
+                "title": "Real-time weather"
             }
         }
     }

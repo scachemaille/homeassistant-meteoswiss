@@ -18,11 +18,11 @@ from homeassistant.const import (
 
 
 from .const import (
+    CONF_FORECAST_NAME,
     CONF_POSTCODE,
     CONF_STATION,
     CONDITION_CLASSES,
     DOMAIN,
-    ATTRIBUTION_TEMPLATE,
 )
 
 
@@ -68,7 +68,7 @@ class MeteoSwissWeather(
         self.__set_data(coordinator.data)
 
     def __set_data(self, data: dict[str, Any]):
-        self._displayName = data["name"]
+        self._displayName = data[CONF_FORECAST_NAME]
         self._forecastData = data["forecast"]
         self._condition = data["condition"]
 
@@ -177,10 +177,13 @@ class MeteoSwissWeather(
 
     @property
     def attribution(self):
-        return ATTRIBUTION_TEMPLATE % (
-            self._attr_station,
-            self._attr_post_code,
-        )
+        a = "Data provided by MeteoSwiss."
+        a += "  Forecasts from postal code %s." % (self._attr_post_code,)
+        if self._attr_station:
+            a += "  Real-time weather data from weather station %s" % (
+                self._attr_station,
+            )
+        return a
 
     @property
     def wind_bearing(self):

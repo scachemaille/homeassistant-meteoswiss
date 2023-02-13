@@ -13,8 +13,10 @@ from hamsclientfork import meteoSwissClient
 from homeassistant.helpers.issue_registry import IssueSeverity
 
 from .const import (
+    CONF_FORECAST_NAME,
     CONF_NAME,
     CONF_POSTCODE,
+    CONF_REAL_TIME_NAME,
     CONF_STATION,
     CONF_UPDATE_INTERVAL,
     DEFAULT_UPDATE_INTERVAL,
@@ -53,13 +55,28 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data.setdefault(DOMAIN, {})
 
     _LOGGER.debug("Current configuration: %s", entry.data)
-    client = await hass.async_add_executor_job(
-        meteoSwissClient,
-        entry.data[CONF_NAME],
-        entry.data[CONF_POSTCODE],
-        entry.data[CONF_STATION],
+    name = entry.data.get(
+        CONF_FORECAST_NAME,
+        entry.data.get(
+            CONF_REAL_TIME_NAME,
+            entry.data.get(CONF_NAME, ""),
+        ),
     )
-    _LOGGER.debug("Client obtained")
+    if not name:
+        entry_id = entry.entry_id
+        ir.async_create_issue(
+            hass,
+            DOMAIN,
+            f"{entry_id}_improperly_configured_{DOMAIN}",
+            is_fixable=False,
+            is_persistent=False,
+            severity=IssueSeverity.ERROR,
+            translation_key="improperly_configured",
+            translation_placeholders={
+                "entry_id": entry_id,
+            },
+        )
+        return False
 
     interval = datetime.timedelta(
         seconds=entry.data.get(
@@ -70,10 +87,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     )
     coordinator = MeteoSwissDataUpdateCoordinator(
         hass,
-        client,
         interval,
         entry.data[CONF_POSTCODE],
-        entry.data[CONF_STATION],
+        station=entry.data.get(CONF_STATION, None),
+        forecast_name=entry.data.get(CONF_FORECAST_NAME, name),
+        real_time_name=entry.data.get(CONF_REAL_TIME_NAME, None),
     )
     await coordinator.async_config_entry_first_refresh()
 
@@ -113,24 +131,41 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     def __init__(
         self,
         hass: HomeAssistant,
-        client: meteoSwissClient,
         update_interval: datetime.timedelta,
         post_code: int,
-        station: str,
+        station: str | None,
+        forecast_name: str,
+        real_time_name: str | None,
     ) -> None:
         """Initialize."""
         self.first_error = None
         self.error_raised = False
         self.hass = hass
-        self.client = client
         self.post_code = post_code
         self.station = station
+        self.forecast_name = forecast_name
+        self.real_time_name = real_time_name
         _LOGGER.debug(
-            "Data will be updated through %s at post code %s every %s",
-            station,
+            "Forecast %s will be provided for post code %s every %s",
+            forecast_name,
             post_code,
             update_interval,
         )
+
+        if station:
+            _LOGGER.debug(
+                "Real-time %s will be updated from %s every %s",
+                real_time_name,
+                station,
+                update_interval,
+            )
+
+        self.client = meteoSwissClient(
+            "%s / %s" % (forecast_name, real_time_name),
+            post_code,
+            station if station else "NO STATION",
+        )
+        _LOGGER.debug("Client obtained")
 
         super().__init__(
             hass,
@@ -147,7 +182,7 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     self.client.get_data,
                 )
                 _LOGGER.debug("Data obtained:\n%s", pprint.pformat(data))
-                if "condition" not in data or not data["condition"]:
+                if self.station and (not data.get("condition")):
                     # Oh no.  We could not retrieve the URL.
                     # We try 20 times.  If it does not succeed,
                     # we will induce a config error.
@@ -181,4 +216,6 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             raise UpdateFailed(exc) from exc
         data[CONF_STATION] = self.station
         data[CONF_POSTCODE] = self.post_code
+        data[CONF_FORECAST_NAME] = self.forecast_name
+        data[CONF_REAL_TIME_NAME] = self.real_time_name
         return data

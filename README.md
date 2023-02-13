@@ -106,8 +106,13 @@ logger:
     custom_components.meteo-swiss: debug
 ```
 
-### Known issues
+## Upgrade notes / known issues
 
+* It used to be mandatory to select a real-time weather station during setup.
+  This step (the last setup step) is now optional — you can select no weather
+  station if you so desire (tracked in
+  [#6](https://github.com/Rudd-O/homeassistant-meteoswiss/issues/6)
+  [#5](https://github.com/Rudd-O/homeassistant-meteoswiss/issues/5)).
 * Users of older versions of this integration were not getting updates frequently
   enough.  This should be fixed in the latest versions, with the proviso that
   Home Assistant must be restarted after updating this integration.
@@ -126,7 +131,8 @@ logger:
   is necessary because the old integration did not provide unique IDs.
 * There is a migration step in the code that is supposed to migrate away
   from `configuration.yaml` setup.  I have not tested it, but you should know
-  that this is deprecated.
+  that this is deprecated and it will raise a repairs issue to remind you
+  to delete the old YAML configuration.
 
 ## Information sources
 
@@ -134,9 +140,9 @@ Data comes from the Meteo Swiss official data sources.
 Forecasts are extracted from the Meteo Swiss API.
 Current conditions are from official data files.
 
-The real-time data for the stations can be found at https://rudd-o.com/meteostations
-(this is a shortlink to it).  Information on the provided values is
-available at [https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt](https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt).
+A primer on Swiss weather stations can be found at https://rudd-o.com/meteostations .
+Information on the provided values is available at
+[https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt](https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/info/VQHA80_en.txt).
 
 ### Privacy
 
