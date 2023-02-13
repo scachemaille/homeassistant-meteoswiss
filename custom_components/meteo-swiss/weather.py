@@ -183,9 +183,8 @@ class MeteoSwissWeather(
             a += "  Real-time weather data from weather station %s." % (
                 self._attr_station,
             )
-            a += "  Stations available at %s ." % (
-                "https://rudd-o.com/meteostations,
-            )
+            url = "https://rudd-o.com/meteostations"
+            a += "  Stations available at %s ." % (url,)
         return a
 
     @property
