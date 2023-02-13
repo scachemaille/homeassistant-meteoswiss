@@ -180,8 +180,11 @@ class MeteoSwissWeather(
         a = "Data provided by MeteoSwiss."
         a += "  Forecasts from postal code %s." % (self._attr_post_code,)
         if self._attr_station:
-            a += "  Real-time weather data from weather station %s" % (
+            a += "  Real-time weather data from weather station %s." % (
                 self._attr_station,
+            )
+            a += "  Stations available at %s ." % (
+                "https://rudd-o.com/meteostations,
             )
         return a
 
