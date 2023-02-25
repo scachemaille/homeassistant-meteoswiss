@@ -177,7 +177,7 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         try:
-            async with timeout(10):
+            async with timeout(15):
                 data = await self.hass.async_add_executor_job(
                     self.client.get_data,
                 )
