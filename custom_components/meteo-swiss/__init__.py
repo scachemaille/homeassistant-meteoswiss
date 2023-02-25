@@ -181,39 +181,42 @@ class MeteoSwissDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 data = await self.hass.async_add_executor_job(
                     self.client.get_data,
                 )
-                _LOGGER.debug("Data obtained:\n%s", pprint.pformat(data))
-                if self.station and (not data.get("condition")):
-                    # Oh no.  We could not retrieve the URL.
-                    # We try 20 times.  If it does not succeed,
-                    # we will induce a config error.
-                    _LOGGER.warning(
-                        "Station %s provided us with no real-time data",
-                        self.station,
-                    )
-                    if self.first_error is None:
-                        self.first_error = time.time()
-
-                    m = MAX_CONTINUOUS_ERROR_TIME
-                    last_error = time.time() - self.first_error
-                    if not self.error_raised and last_error > m:
-                        ir.async_create_issue(
-                            self.hass,
-                            DOMAIN,
-                            f"{self.station}_provides_no_data_{DOMAIN}",
-                            is_fixable=False,
-                            is_persistent=False,
-                            severity=IssueSeverity.ERROR,
-                            translation_key="station_no_data",
-                            translation_placeholders={
-                                "station": self.station,
-                            },
-                        )
-                        self.error_raised = True
-                else:
-                    self.first_error = None
-                    self.error_raised = False
         except Exception as exc:
             raise UpdateFailed(exc) from exc
+
+        _LOGGER.debug("Data obtained:\n%s", pprint.pformat(data))
+        if self.station:
+            if not data.get("condition"):
+                # Oh no.  We could not retrieve the URL.
+                # We try 20 times.  If it does not succeed,
+                # we will induce a config error.
+                _LOGGER.warning(
+                    "Station %s provided us with no real-time data",
+                    self.station,
+                )
+                if self.first_error is None:
+                    self.first_error = time.time()
+
+                m = MAX_CONTINUOUS_ERROR_TIME
+                last_error = time.time() - self.first_error
+                if not self.error_raised and last_error > m:
+                    ir.async_create_issue(
+                        self.hass,
+                        DOMAIN,
+                        f"{self.station}_provides_no_data_{DOMAIN}",
+                        is_fixable=False,
+                        is_persistent=False,
+                        severity=IssueSeverity.ERROR,
+                        translation_key="station_no_data",
+                        translation_placeholders={
+                            "station": self.station,
+                        },
+                    )
+                    self.error_raised = True
+            else:
+                self.first_error = None
+                self.error_raised = False
+
         data[CONF_STATION] = self.station
         data[CONF_POSTCODE] = self.post_code
         data[CONF_FORECAST_NAME] = self.forecast_name
