@@ -8,6 +8,7 @@ from homeassistant.components.weather import (
     ATTR_FORECAST_NATIVE_TEMP,
     ATTR_FORECAST_NATIVE_TEMP_LOW,
     ATTR_FORECAST_TIME,
+    ATTR_FORECAST_NATIVE_PRECIPITATION,
     WeatherEntity,
 )
 from homeassistant.const import (
@@ -216,6 +217,9 @@ class MeteoSwissWeather(
             )
             data_out[ATTR_FORECAST_NATIVE_TEMP] = float(
                 forecast["temperatureMax"],
+            )
+            data_out[ATTR_FORECAST_NATIVE_PRECIPITATION] = float(
+                forecast["precipitation"],
             )
             data_out[ATTR_FORECAST_CONDITION] = next(
                 (
